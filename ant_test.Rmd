@@ -14,7 +14,6 @@ Short PCA example (commented out so you can see what happens one step at a time.
 ###Get packages and ant nest nutrient data
 ```{r}
 library(corrplot)
-library(vegan)
 library(tidyverse)
 
 ant_nutrients <- read_csv("ant_nutrients.csv")
