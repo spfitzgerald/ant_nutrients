@@ -1,0 +1,47 @@
+---
+title: "ant_test_doc"
+author: "Allison Horst"
+date: "March 6, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Short PCA example (commented out so you can see what happens one step at a time...)
+
+###Get packages and ant nest nutrient data
+```{r}
+library(corrplot)
+library(vegan)
+library(tidyverse)
+
+ant_nutrients <- read_csv("ant_nutrients.csv")
+ant_df <- rename(ant_nutrients, Na = X1) # Rename because it thinks it's NA
+```
+
+```{r}
+corrplot(cor(ant_df), method = "ellipse")
+# Other option:
+corrplot(cor(ant_df), type = "upper", method = "square")
+
+
+# Perform PCA
+
+ant_pca <- prcomp(ant_df, scale = TRUE) # Note: all must be numeric (the country names are just labels), so we exclude column 1
+summary(ant_pca) # Within first two PCs, 63% of variance explained!
+
+# Use the plot() function on the PCA name to see how the variances decline as the principal component increases
+
+plot(ant_pca)
+# Or, alternatively:
+screeplot(ant_pca, type = "lines") # Shows the same information
+
+# Notice that a large amount of the variance is described after 3 - 4 principal components (but we just show two on the biplot)
+
+# Check out the biplot! 
+
+biplot(ant_pca, cex = 0.5)
+```
+
